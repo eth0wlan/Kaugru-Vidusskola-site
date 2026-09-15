@@ -1,0 +1,35 @@
+name: Deploy website
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+concurrency:
+  group: production-deploy
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Deploy to server
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+        run: |
+          mkdir -p ~/.ssh
+          chmod 700 ~/.ssh
+
+          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          chmod 600 ~/.ssh/deploy_key
+
+          ssh-keyscan -H 145.239.80.49 >> ~/.ssh/known_hosts
+
+          ssh -i ~/.ssh/deploy_key ubuntu@145.239.80.49 '
+            set -e
+            cd /var/www/kaugru
+            git fetch origin main
+            git reset --hard origin/main
+          '
