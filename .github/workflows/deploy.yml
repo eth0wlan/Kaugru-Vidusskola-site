@@ -17,19 +17,21 @@ jobs:
     steps:
       - name: Deploy to server
         env:
-          DEPLOY_KEY: ${{ secrets.DEPLOY_KEY }}
+          DEPLOY_KEY_B64: ${{ secrets.DEPLOY_KEY_B64 }}
         run: |
           mkdir -p ~/.ssh
           chmod 700 ~/.ssh
 
-          printf '%s\n' "$DEPLOY_KEY" > ~/.ssh/deploy_key
+          printf '%s' "$DEPLOY_KEY_B64" | base64 --decode > ~/.ssh/deploy_key
           chmod 600 ~/.ssh/deploy_key
 
           ssh-keyscan -H 145.239.80.49 >> ~/.ssh/known_hosts
 
-          ssh -i ~/.ssh/deploy_key ubuntu@145.239.80.49 '
-            set -e
-            cd /var/www/kaugru
-            git fetch origin main
-            git reset --hard origin/main
-          '
+          ssh -o IdentitiesOnly=yes \
+              -i ~/.ssh/deploy_key \
+              ubuntu@145.239.80.49 '
+                set -e
+                cd /var/www/kaugru
+                git fetch origin main
+                git reset --hard origin/main
+              '
