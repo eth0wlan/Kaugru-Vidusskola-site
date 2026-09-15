@@ -3,10 +3,10 @@ import webview
 
 if __name__ == '__main__':
     webview.create_window(
-        'Debug window',
-        '/home/zeta/Desktop/project/static/web/index.html',
-        width=800,
-        height=600
+        'Kauguru vidusskola App',
+        '/home/zeta/Documents/Kaugru-Vidusskola-site/static/web/index.html',
+        width=1200,
+        height=900
     )
 
     webview.start()

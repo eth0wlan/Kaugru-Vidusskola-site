@@ -9,7 +9,7 @@ body {
     color: #222;
     position: relative;
     min-height: 100vh;
-    overflow: hidden; 
+    overflow-x: hidden; 
 }
 
 body::before {
@@ -28,7 +28,6 @@ body::before {
     z-index: -2;
 }
 
-
 body::after {
     content: "";
     position: fixed;
@@ -37,7 +36,6 @@ body::after {
     z-index: -1;
 }
 
-/* Верхнее меню */
 header {
     height: 70px;
     padding: 0 40px;
@@ -74,7 +72,6 @@ nav a:hover {
     color: #38bdf8;
 }
 
-/* Основная часть */
 main {
     min-height: calc(100vh - 70px);
 
@@ -91,29 +88,77 @@ main {
 }
 
 .content p {
-    color: #64748b;
-    font-size: 20px;
+    color: #202020;
+    font-size: 29px;
+}
+
+footer {
+    background-color: #1e293b;
+    color: #cbd5e1;
+    padding: 40px 40px 0;
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    display: flex;
+    flex-wrap: wrap;
+    gap: 40px;
+    justify-content: space-between;
+
+    padding-bottom: 30px;
+}
+
+.footer-block {
+      text-decoration: none;
+    color: #94a3b8;
+    flex: 1;
+    min-width: 180px;
+    display: block;
 }
 
 
-@media (max-width: 600px) {
-    header {
-        padding: 0 20px;
-    }
+.footer-block h3 {
+    color: white;
+    font-size: 18px;
+    margin-bottom: 12px;
+}
 
-    nav ul {
-        gap: 12px;
-    }
+.footer-block p {
+    font-size: 14px;
+    line-height: 1.6;
+    color: #94a3b8;
+}
 
-    nav a {
-        font-size: 14px;
-    }
+.footer-bottom {
+    border-top: 1px solid #334155;
+    text-align: center;
+    padding: 15px 20px;
+}
 
-    .logo {
-        font-size: 20px;
-    }
+.footer-bottom p {
+    font-size: 13px;
+    color: #64748b;
+}
+.footer-block:hover {
+    color: #3f6498;
+    
 
-    .content h1 {
-        font-size: 36px;
-    }
+}
+.social-icons {
+    display: flex;
+    justify-content: center;
+    gap: 16px;
+    margin-bottom: 10px;
+}
+
+.social-icons a {
+    color: #94a3b8;
+    display: inline-flex;
+    transition: color 0.3s;
+}
+
+.social-icons a:hover {
+    color: #38bdf8;
 }
