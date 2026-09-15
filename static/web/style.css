@@ -196,3 +196,67 @@ footer {
     object-fit: contain;
     border-radius: 50%;
 }
+
+.hymn-card {
+    max-width: 900px;
+    margin: 4px auto;
+    padding: 50px;
+    text-align: center;
+    color: #222;
+}
+
+.hymn-card .music-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+}
+
+.hymn-card h1 {
+    font-size: 55px;
+    margin-bottom: 20px;
+}
+
+.hymn-card h2 {
+    font-size: 34px;
+    margin-bottom: 25px;
+}
+
+.hymn-card .authors {
+    font-size: 34px;
+    line-height: 1.6;
+}
+
+.hymn-card .authors strong {
+    font-weight: bold;
+}
+
+.hymn-card .gold-line {
+    width: 150px;
+    height: 4px;
+    margin: 20px auto;
+}
+.hymn-part p {
+    font-size: 23px;
+    line-height: 1.8;
+}
+.hymn-part .chorus {
+    margin-top: 50px;
+   line-height: 1.8;
+}
+.content a {
+    font-size: 36px;
+    font-weight: bold;
+    color: #222;
+    text-decoration: none;
+    outline: none;
+    border: none;
+}
+
+.content a:hover {
+    color: #38bdf8;
+}
+
+.content a:focus {
+    outline: none;
+    border: none;
+}
+
