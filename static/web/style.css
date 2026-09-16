@@ -6,10 +6,10 @@
 
 body {
     font-family: Arial, sans-serif;
-    color: #ffff;
+    color: #ffffff;
     position: relative;
     min-height: 100vh;
-    overflow-x: hidden; 
+    overflow-x: hidden;
 }
 
 body::before {
@@ -20,7 +20,7 @@ body::before {
     right: -20px;
     bottom: -20px;
 
-    background-image: url('images/back.png'); 
+    background-image: url('images/back.png');
     background-size: cover;
     background-position: center;
 
@@ -32,10 +32,11 @@ body::after {
     content: "";
     position: fixed;
     inset: 0;
-    background-color: rgba(97, 99, 100, 0.6); 
+    background-color: rgba(97, 99, 100, 0.6);
     z-index: -1;
 }
 
+/* Header */
 header {
     height: 70px;
     padding: 0 40px;
@@ -48,10 +49,20 @@ header {
 }
 
 .logo {
-    color: white;
+    display: flex;
+    align-items: center;
+    gap: 12px;
     text-decoration: none;
-    font-size: 24px;
+    color: white;
+    font-size: 22px;
     font-weight: bold;
+}
+
+.logo img {
+    width: 55px;
+    height: 55px;
+    object-fit: contain;
+    border-radius: 50%;
 }
 
 nav ul {
@@ -64,7 +75,6 @@ nav a {
     color: white;
     text-decoration: none;
     font-size: 16px;
-
     transition: color 0.3s;
 }
 
@@ -72,6 +82,7 @@ nav a:hover {
     color: #38bdf8;
 }
 
+/* Main */
 main {
     min-height: calc(100vh - 70px);
 
@@ -85,13 +96,118 @@ main {
 .content h1 {
     margin-bottom: 20px;
     font-size: 48px;
+    color: #ffffff;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
 }
 
 .content p {
-    color: #ffff;
+    color: #ffffff;
     font-size: 29px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
+.content a {
+    font-size: 36px;
+    font-weight: bold;
+    color: #ffffff;
+    text-decoration: none;
+    outline: none;
+    border: none;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.content a:hover {
+    color: #38bdf8;
+}
+
+.content a:focus {
+    outline: none;
+    border: none;
+}
+
+/* Spacers */
+.spacer {
+    height: 21px;
+}
+
+.spacerr {
+    height: 80px;
+}
+
+/* News grid */
+.news-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+.news-card img {
+    width: 100%;
+    height: 550px;
+    object-fit: cover;
+}
+
+.news-card-content h3,
+.news-card-content p {
+    color: #ffffff; 
+}
+
+/* Hymn card */
+.hymn-card {
+    max-width: 900px;
+    margin: 4px auto;
+    padding: 50px;
+    text-align: center;
+    color: #ffffff;
+}
+
+.hymn-card .music-icon {
+    font-size: 50px;
+    margin-bottom: 15px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hymn-card h1 {
+    font-size: 55px;
+    margin-bottom: 20px;
+    text-shadow: 0 2px 8px rgba(0, 0, 0, 0.6);
+}
+
+.hymn-card h2 {
+    font-size: 34px;
+    margin-bottom: 25px;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hymn-card .authors {
+    font-size: 34px;
+    line-height: 1.6;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hymn-card .authors strong {
+    font-weight: bold;
+}
+
+.hymn-card .gold-line {
+    width: 150px;
+    height: 4px;
+    margin: 20px auto;
+    background-color: #38bdf8;
+}
+
+.hymn-part p {
+    font-size: 23px;
+    line-height: 1.8;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+}
+
+.hymn-part .chorus {
+    margin-top: 50px;
+    line-height: 1.8;
+}
+
+/* Footer */
 footer {
     background-color: #1e293b;
     color: #cbd5e1;
@@ -111,13 +227,16 @@ footer {
 }
 
 .footer-block {
-      text-decoration: none;
+    text-decoration: none;
     color: #94a3b8;
     flex: 1;
     min-width: 180px;
     display: block;
 }
 
+.footer-block:hover {
+    color: #3f6498;
+}
 
 .footer-block h3 {
     color: white;
@@ -141,11 +260,7 @@ footer {
     font-size: 13px;
     color: #64748b;
 }
-.footer-block:hover {
-    color: #3f6498;
-    
 
-}
 .social-icons {
     display: flex;
     justify-content: center;
@@ -162,101 +277,3 @@ footer {
 .social-icons a:hover {
     color: #38bdf8;
 }
-.spacer {
-    height: 21px; 
-}
-.spacerr {
-    height: 80px; 
-}
-.news-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 20px;
-}
-
-.news-card img {
-    width: 100%;
-    height: 550px;
-    object-fit: cover;
-}
-.logo {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    text-decoration: none;
-    color: inherit;
-    font-size: 22px;
-    font-weight: bold;
-    color: white;
-}
-
-.logo img {
-    width: 55px;
-    height: 55px;
-    object-fit: contain;
-    border-radius: 50%;
-}
-
-.hymn-card {
-    max-width: 900px;
-    margin: 4px auto;
-    padding: 50px;
-    text-align: center;
-    color: #ffff;
-}
-
-.hymn-card .music-icon {
-    font-size: 50px;
-    margin-bottom: 15px;
-}
-
-.hymn-card h1 {
-    font-size: 55px;
-    margin-bottom: 20px;
-}
-
-.hymn-card h2 {
-    font-size: 34px;
-    margin-bottom: 25px;
-}
-
-.hymn-card .authors {
-    font-size: 34px;
-    line-height: 1.6;
-}
-
-.hymn-card .authors strong {
-    font-weight: bold;
-}
-
-.hymn-card .gold-line {
-    width: 150px;
-    height: 4px;
-    margin: 20px auto;
-}
-.hymn-part p {
-    font-size: 23px;
-    line-height: 1.8;
-}
-.hymn-part .chorus {
-    margin-top: 50px;
-   line-height: 1.8;
-}
-.content a {
-    font-size: 36px;
-    font-weight: bold;
-    color: #ffff;
-    text-decoration: none;
-    outline: none;
-    border: none;
-}
-
-.content a:hover {
-    color: #38bdf8;
-}
-
-.content a:focus {
-    outline: none;
-    border: none;
-}
-
