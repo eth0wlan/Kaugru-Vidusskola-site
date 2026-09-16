@@ -6,7 +6,7 @@
 
 body {
     font-family: Arial, sans-serif;
-    color: #222;
+    color: #ffff;
     position: relative;
     min-height: 100vh;
     overflow-x: hidden; 
@@ -88,7 +88,7 @@ main {
 }
 
 .content p {
-    color: #202020;
+    color: #ffff;
     font-size: 29px;
 }
 
@@ -202,7 +202,7 @@ footer {
     margin: 4px auto;
     padding: 50px;
     text-align: center;
-    color: #222;
+    color: #ffff;
 }
 
 .hymn-card .music-icon {
@@ -245,7 +245,7 @@ footer {
 .content a {
     font-size: 36px;
     font-weight: bold;
-    color: #222;
+    color: #ffff;
     text-decoration: none;
     outline: none;
     border: none;
