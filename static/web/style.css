@@ -282,3 +282,161 @@ footer {
     border-radius: 50%;
     margin-bottom: 10px;
 }
+
+/* ============================= */
+/* Mobile responsive adjustments */
+/* ============================= */
+
+/* Tablets and small laptops */
+@media (max-width: 1024px) {
+    .news-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .news-card img {
+        height: 400px;
+    }
+
+    .hymn-card {
+        max-width: 90%;
+        padding: 35px 25px;
+    }
+}
+
+/* Tablets / large phones */
+@media (max-width: 768px) {
+    header {
+        height: auto;
+        flex-wrap: wrap;
+        padding: 15px 20px;
+        gap: 15px;
+    }
+
+    .logo {
+        font-size: 18px;
+    }
+
+    .logo img {
+        width: 45px;
+        height: 45px;
+    }
+
+    nav ul {
+        gap: 18px;
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+
+    nav a {
+        font-size: 14px;
+    }
+
+    main {
+        padding: 30px 20px;
+    }
+
+    .content h1 {
+        font-size: 34px;
+    }
+
+    .content p {
+        font-size: 20px;
+    }
+
+    .content a {
+        font-size: 26px;
+    }
+
+    .news-grid {
+        grid-template-columns: 1fr;
+        gap: 16px;
+        padding: 0 15px;
+    }
+
+    .news-card img {
+        height: 260px;
+    }
+
+    .hymn-card {
+        padding: 25px 15px;
+    }
+
+    .hymn-card h1 {
+        font-size: 36px;
+    }
+
+    .hymn-card h2 {
+        font-size: 22px;
+    }
+
+    .hymn-card .authors {
+        font-size: 20px;
+    }
+
+    .hymn-part p {
+        font-size: 18px;
+        line-height: 1.6;
+    }
+
+    .footer-content {
+        flex-direction: column;
+        gap: 25px;
+        padding-bottom: 20px;
+    }
+
+    .footer-block {
+        min-width: 100%;
+        text-align: center;
+    }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+    header {
+        padding: 12px 15px;
+    }
+
+    nav ul {
+        gap: 12px;
+    }
+
+    nav a {
+        font-size: 13px;
+    }
+
+    .content h1 {
+        font-size: 26px;
+    }
+
+    .content p {
+        font-size: 16px;
+    }
+
+    .content a {
+        font-size: 20px;
+    }
+
+    .news-card img {
+        height: 200px;
+    }
+
+    .hymn-card h1 {
+        font-size: 28px;
+    }
+
+    .hymn-card h2 {
+        font-size: 18px;
+    }
+
+    .hymn-card .authors {
+        font-size: 17px;
+    }
+
+    .hymn-part p {
+        font-size: 16px;
+    }
+
+    .spacerr {
+        height: 40px;
+    }
+}
