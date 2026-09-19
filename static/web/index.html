@@ -1,89 +1,439 @@
 <!DOCTYPE html>
-<html lang="lv">
+<html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kauguru vidusskola</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Miroslav Nikiforovs — настоящий oluxs</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Rubik:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  box-sizing: border-box;
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  --bg: #FFE600;
+  --ink: #17141F;
+  --paper: #FFFBEA;
+  --card: #FFFFFF;
+  --pink: #FF2E93;
+  --cyan: #00C2FF;
+  --display: Anton, Impact, "Arial Narrow", sans-serif;
+  --body: Rubik, system-ui, -apple-system, "Segoe UI", sans-serif;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #17141F;
+    --ink: #FFF3B0;
+    --paper: #241F33;
+    --card: #2E2840;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #17141F;
+  --ink: #FFF3B0;
+  --paper: #241F33;
+  --card: #2E2840;
+}
+html { height: auto; scroll-padding-top: env(safe-area-inset-top, 0px); }
+*, *::before, *::after { box-sizing: inherit; }
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--body);
+  font-size: 18px;
+  line-height: 1.55;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--pink); outline-offset: 3px; }
 
-    <link rel="stylesheet" href="style.css">
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+
+/* ---------- hero ---------- */
+.hero { padding: 40px 0 56px; }
+.hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 40px; align-items: center; }
+.tag {
+  display: inline-block; font-weight: 700; font-size: 15px;
+  background: var(--ink); color: var(--bg); padding: 4px 12px; border-radius: 999px;
+  margin: 0 0 18px;
+}
+h1 {
+  font-family: var(--display); font-weight: 400;
+  font-size: clamp(52px, 9vw, 112px); line-height: 0.95; margin: 0 0 18px;
+  letter-spacing: 0.5px;
+}
+.verdict {
+  display: inline-block; font-family: var(--display);
+  font-size: clamp(30px, 5vw, 56px); line-height: 1.05;
+  background: var(--pink); color: #fff; padding: 6px 18px 8px;
+  transform: rotate(-2deg); border: 4px solid var(--ink);
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.lead { max-width: 30em; margin: 28px 0 0; font-size: 20px; }
+
+.cert {
+  background: var(--paper); border: 4px solid var(--ink); border-radius: 6px;
+  padding: 28px 26px 30px; position: relative; transform: rotate(2deg);
+  box-shadow: 10px 10px 0 var(--ink);
+}
+.cert::before {
+  content: ""; position: absolute; inset: 8px; border: 2px dashed var(--ink); opacity: .45; pointer-events: none;
+}
+.cert h2 { font-family: var(--display); font-weight: 400; font-size: 34px; margin: 0 0 6px; line-height: 1.1; }
+.cert p { margin: 6px 0; }
+.cert .big { font-family: var(--display); font-size: 46px; line-height: 1; margin: 14px 0 12px; color: var(--pink); }
+.cert dl { margin: 16px 0 0; display: grid; grid-template-columns: auto 1fr; gap: 4px 14px; font-size: 16px; }
+.cert dt { font-weight: 700; }
+.cert dd { margin: 0; }
+.stamp {
+  position: absolute; right: -14px; bottom: -22px;
+  font-family: var(--display); font-size: 30px; line-height: 1;
+  color: #E0141F; border: 5px solid #E0141F; border-radius: 10px;
+  padding: 8px 14px; transform: rotate(-14deg); background: var(--paper);
+  animation: slam .5s cubic-bezier(.2, 1.6, .4, 1) .5s both;
+}
+@keyframes slam {
+  from { transform: rotate(-14deg) scale(3.2); opacity: 0; }
+  to   { transform: rotate(-14deg) scale(1);   opacity: 1; }
+}
+
+/* ---------- sections ---------- */
+section { padding: 44px 0; }
+h2.title { font-family: var(--display); font-weight: 400; font-size: clamp(34px, 5vw, 56px); margin: 0 0 8px; line-height: 1.05; }
+.sub { margin: 0 0 28px; max-width: 34em; }
+
+/* meter */
+.meter-box {
+  background: var(--paper); border: 4px solid var(--ink); border-radius: 6px;
+  padding: 26px; box-shadow: 8px 8px 0 var(--ink);
+}
+.track { height: 40px; border: 4px solid var(--ink); border-radius: 999px; overflow: hidden; background: var(--card); }
+.fill { height: 100%; width: 0%; background: linear-gradient(90deg, var(--cyan), var(--pink)); transition: width 1.6s cubic-bezier(.3, .7, .2, 1); }
+.meter-row { display: flex; flex-wrap: wrap; gap: 16px 24px; align-items: center; margin-top: 20px; }
+.btn {
+  font: 700 18px var(--body); cursor: pointer;
+  background: var(--ink); color: var(--bg); border: 0; border-radius: 999px; padding: 14px 26px;
+  transition: transform .12s;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn:active { transform: translateY(1px); }
+.btn[disabled] { opacity: .6; cursor: default; transform: none; }
+.readout { font-family: var(--display); font-size: 40px; line-height: 1; min-width: 5ch; }
+.msg { margin: 0; flex: 1 1 220px; font-weight: 500; }
+.shake { animation: shake .45s; }
+@keyframes shake {
+  20% { transform: translateX(-8px) rotate(-1deg); }
+  40% { transform: translateX(8px) rotate(1deg); }
+  60% { transform: translateX(-6px); }
+  80% { transform: translateX(6px); }
+}
+
+/* meme grid */
+.grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: 22px; }
+.meme {
+  position: relative; aspect-ratio: 1 / 1; border: 4px solid var(--ink); border-radius: 6px;
+  overflow: hidden; display: flex; flex-direction: column; justify-content: space-between;
+  align-items: center; padding: 14px 12px; text-align: center; color: #fff;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+.meme .t {
+  font-family: var(--display); font-size: clamp(20px, 2.2vw, 25px); line-height: 1.08;
+  text-transform: uppercase; letter-spacing: .5px; margin: 0; position: relative; z-index: 1;
+  -webkit-text-stroke: 2px #000; paint-order: stroke fill; text-shadow: 2px 2px 0 #000;
+}
+.meme .pic { font-size: clamp(64px, 8vw, 96px); line-height: 1; position: absolute; inset: 0; display: grid; place-items: center; }
+.meme.ladder { justify-content: stretch; padding: 0; color: #111; }
+.meme.ladder .row { flex: 1; width: 100%; display: flex; align-items: center; gap: 10px; padding: 0 12px; text-align: left;
+  font-weight: 700; font-size: 15px; border-bottom: 3px solid var(--ink); }
+.meme.ladder .row:last-child { border-bottom: 0; }
+.meme.ladder .row span.e { font-size: 34px; }
+.c1 { background: #7C4DFF; } .c2 { background: #00A86B; } .c3 { background: #FF8A00; }
+.c4 { background: #E0141F; } .c5 { background: #0091EA; } .c6 { background: #D81B7B; }
+.c7 { background: #5D4037; } .c8 { background: #009688; } .c9 { background: #6A1B9A; }
+.c10 { background: #F9A825; } .c11 { background: #37474F; } .c12 { background: #2E7D32; }
+
+/* generator */
+.gen { display: grid; grid-template-columns: minmax(0, 340px) 1fr; gap: 32px; align-items: center; }
+.gen .meme { box-shadow: 8px 8px 0 var(--ink); transition: background .2s; }
+.gen .side p { margin: 0 0 18px; }
+
+/* experts */
+.quotes { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 22px; }
+blockquote {
+  margin: 0; background: var(--paper); border: 4px solid var(--ink); border-radius: 6px; padding: 20px 22px;
+  box-shadow: 6px 6px 0 var(--ink);
+}
+blockquote p { margin: 0 0 12px; font-weight: 500; }
+blockquote footer { font-size: 15px; font-weight: 700; color: var(--pink); }
+
+.foot { padding: 36px 0 48px; font-size: 15px; }
+.foot p { margin: 0; max-width: 40em; }
+
+@media (max-width: 820px) {
+  .hero-grid { grid-template-columns: 1fr; }
+  .cert { margin-right: 10px; }
+  .gen { grid-template-columns: 1fr; }
+  body { font-size: 17px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .stamp { animation: none; }
+  .fill { transition: none; }
+  .shake { animation: none; }
+  .btn { transition: none; }
+}
+</style>
 </head>
-
 <body>
 
-    <header>
-           <a href="index.html" class="logo">
-        <img src="images/logo.png" alt="Jūrmalas Kauguru vidusskolas logo">
-        <span>Jūrmalas Kauguru vidusskola</span>
-    
-           
-        </a>
-        <nav>
-            <ul>
-                <li><a href="jaunumi.html">Jaunumi</a></li>
-                <li><a href="info.html">Par mums</a></li>
-                <li><a href="https://calendar.google.com/calendar/u/0/embed?src=lm09omf5vbimu9sq7rovsoo6m4@group.calendar.google.com&ctz=Europe/Riga">Kalendārais plāns</a></li>
-                <li><a href="#">Kontakti</a></li>
-            </ul>
-        </nav>
-    </header>
+<header class="wrap hero">
+  <div class="hero-grid">
+    <div>
+      <p class="tag">Официальный сайт-подтверждение</p>
+      <h1>Miroslav Nikiforovs</h1>
+      <div class="verdict">настоящий oluxs</div>
+      <p class="lead">Мы искали долго. Проверили все источники, опросили все мемы. Итог однозначный: перед вами настоящий, оригинальный, сертифицированный oluxs.</p>
+    </div>
+    <div class="cert" role="img" aria-label="Сертификат: Miroslav Nikiforovs — настоящий oluxs">
+      <h2>Сертификат подлинности</h2>
+      <p>Настоящим удостоверяется, что</p>
+      <div class="big">Miroslav Nikiforovs</div>
+      <p>является настоящим oluxs. Без подделок, без копий, в единственном экземпляре.</p>
+      <dl>
+        <dt>Номер</dt><dd>000-OLUXS-001</dd>
+        <dt>Выдан</dt><dd>Комитетом по мемам</dd>
+        <dt>Действует</dt><dd>Вечно</dd>
+      </dl>
+      <div class="stamp">Подтверждено</div>
+    </div>
+  </div>
+</header>
 
-    <main>
-        <div class="content">
-             <div class="image-frame">
-              <h1>Jūrmalas Kauguru vidusskola</h1>
-              <p>Labākā skola Jūrmalā!</p>
-             </div> 
-             
-              <div class="index-logo">
-                    <div class="spacer"></div>
-                    <img src="images/kvs-stadions1.png" alt="OLUX 2026">
-                </div>
-                    <div class="news-card-content">
-                    <div class="spacer"></div>
-                    <img src="images/kvs-sakumskola1.png" alt="OLUX 2026">
-                </div>
-                   <div class="spacer"></div>
-                
-        </div>
-    </main>
- <footer>
-    <div class="footer-content">
-        <div class="footer-block">
-            <h3>Adrese</h3>
-            <a class="footer-block" href="https://maps.app.goo.gl/LZEuZgjSzzF6Meci9">Raiņa iela 118, Jūrmala, LV-2016</a>
-        </div>
-        <div class="footer-block">
-            <h3>Kontakti</h3>
-            <p>Tālr.: +371 26678110</p>
-            <p>E-pasts: kauguruvsk@edu.jurmala.lv</p>
-        </div>
-        <div class="footer-block">
-            <h3>Darba laiks</h3>
-            <p>Pirmd.–Piektd.: 7:00–19:00</p>
-        </div>
-        
+<main>
+  <section class="wrap" id="meter">
+    <h2 class="title">Олуксометр</h2>
+    <p class="sub">Прибор измеряет уровень oluxs в организме. Нажмите кнопку и убедитесь сами.</p>
+    <div class="meter-box" id="meterBox">
+      <div class="track" role="progressbar" aria-label="Уровень oluxs" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" id="track">
+        <div class="fill" id="fill"></div>
+      </div>
+      <div class="meter-row">
+        <button class="btn" id="measure" type="button">Измерить Miroslav Nikiforovs</button>
+        <div class="readout" id="readout" aria-live="polite">0%</div>
+        <p class="msg" id="msg">Прибор готов. Шкала ещё не знает, что её ждёт.</p>
+      </div>
     </div>
-   <div class="footer-bottom">
-    
-    <div class="social-icons">
-        <a href="https://www.instagram.com/kauguruvidusskola/" target="_blank" aria-label="Instagram">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-            </svg>
-        </a>
-        <a href="https://www.youtube.com/results?search_query=kauguru+vidusskola" target="_blank" aria-label="YouTube">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/>
-            </svg>
-        </a>
-        <a href="https://www.facebook.com/kauguruvsk" target="_blank" aria-label="Facebook">
-            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="20" height="20" fill="currentColor">
-                <path d="M22.675 0h-21.35c-.732 0-1.325.593-1.325 1.325v21.351c0 .731.593 1.324 1.325 1.324h11.495v-9.294h-3.128v-3.622h3.128v-2.671c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.463.099 2.795.143v3.24l-1.918.001c-1.504 0-1.795.715-1.795 1.763v2.312h3.587l-.467 3.622h-3.12v9.293h6.116c.73 0 1.323-.593 1.323-1.325v-21.35c0-.732-.593-1.325-1.325-1.325z"/>
-            </svg>
-        </a>
+  </section>
+
+  <section class="wrap" id="wall">
+    <h2 class="title">Стена мемов</h2>
+    <p class="sub">Двенадцать неопровержимых доказательств. Каждое проверено лично Комитетом.</p>
+    <div class="grid">
+
+      <figure class="meme c1" style="margin:0">
+        <p class="t">Я: ищу настоящего oluxs</p>
+        <div class="pic" aria-hidden="true">🤔</div>
+        <p class="t">Интернет: Miroslav Nikiforovs</p>
+      </figure>
+
+      <figure class="meme c2" style="margin:0">
+        <p class="t">Учёные 10 лет искали oluxs</p>
+        <div class="pic" aria-hidden="true">🔬</div>
+        <p class="t">Нашли. Это Miroslav Nikiforovs</p>
+      </figure>
+
+      <figure class="meme c3" style="margin:0">
+        <p class="t">Такой oluxs</p>
+        <div class="pic" aria-hidden="true">🐕</div>
+        <p class="t">Очень Miroslav. Wow.</p>
+      </figure>
+
+      <figure class="meme c4" style="margin:0">
+        <p class="t">Внимание! Сигнал тревоги</p>
+        <div class="pic" aria-hidden="true">🚨</div>
+        <p class="t">В зоне видимости настоящий oluxs</p>
+      </figure>
+
+      <figure class="meme ladder" style="margin:0; background:#fff">
+        <div class="row" style="background:#E3F2FD"><span class="e">🧠</span>Обычный oluxs</div>
+        <div class="row" style="background:#BBDEFB"><span class="e">🧠✨</span>Хороший oluxs</div>
+        <div class="row" style="background:#FFF59D"><span class="e">🌌</span>Настоящий oluxs</div>
+        <div class="row" style="background:#FFCC80"><span class="e">👑</span>Miroslav Nikiforovs</div>
+      </figure>
+
+      <figure class="meme c6" style="margin:0">
+        <p class="t">Уровень oluxs у всех остальных: 12%</p>
+        <div class="pic" aria-hidden="true">📉</div>
+        <p class="t">У Miroslav Nikiforovs: ∞</p>
+      </figure>
+
+      <figure class="meme c5" style="margin:0">
+        <p class="t">Google: что такое oluxs?</p>
+        <div class="pic" aria-hidden="true">🔍</div>
+        <p class="t">Google: см. Miroslav Nikiforovs</p>
+      </figure>
+
+      <figure class="meme c7" style="margin:0">
+        <p class="t">Сказали: будь собой</p>
+        <div class="pic" aria-hidden="true">🛑</div>
+        <p class="t">Miroslav: ну окей</p>
+      </figure>
+
+      <figure class="meme c8" style="margin:0">
+        <p class="t">Золото по oluxs</p>
+        <div class="pic" aria-hidden="true">🏆</div>
+        <p class="t">Miroslav Nikiforovs. Без конкурентов</p>
+      </figure>
+
+      <figure class="meme c9" style="margin:0">
+        <p class="t">Как понять, что перед тобой настоящий oluxs?</p>
+        <div class="pic" aria-hidden="true">😱</div>
+        <p class="t">Спойлер: это Miroslav Nikiforovs</p>
+      </figure>
+
+      <figure class="meme c10" style="margin:0">
+        <p class="t">Все: «просто oluxs»</p>
+        <div class="pic" aria-hidden="true">😎</div>
+        <p class="t">Miroslav Nikiforovs: «держите мой сертификат»</p>
+      </figure>
+
+      <figure class="meme c11" style="margin:0">
+        <p class="t">Miroslav Nikiforovs после прочтения этого сайта:</p>
+        <div class="pic" aria-hidden="true">🗿</div>
+        <p class="t">…</p>
+      </figure>
+
     </div>
-    <p>&copy; ужасы спасите мне за это не платят я хочу деньга много деньга и  спать а не 10 уроков  Aleksejs Zmicerevskis</p>
-</div>
- </footer>
+  </section>
+
+  <section class="wrap" id="generator">
+    <h2 class="title">Генератор мемов</h2>
+    <p class="sub">Двенадцати мало? Нажмите кнопку, и Комитет выдаст новый мем. Запас неограничен.</p>
+    <div class="gen">
+      <figure class="meme c3" id="genMeme" style="margin:0">
+        <p class="t" id="genTop">Нажми кнопку</p>
+        <div class="pic" id="genPic" aria-hidden="true">🎲</div>
+        <p class="t" id="genBottom">и получи мем</p>
+      </figure>
+      <div class="side">
+        <p>Каждый мем составляется случайно, но вывод всегда один и тот же.</p>
+        <button class="btn" id="genBtn" type="button">Ещё мем</button>
+      </div>
+    </div>
+  </section>
+
+  <section class="wrap" id="experts">
+    <h2 class="title">Мнения экспертов</h2>
+    <p class="sub">Независимые организации, которых мы только что придумали, единогласны.</p>
+    <div class="quotes">
+      <blockquote>
+        <p>Мы проверили сто тысяч кандидатов. Miroslav Nikiforovs стал единственным, кого прибор признал без оговорок.</p>
+        <footer>Институт Абсолютного oluxs</footer>
+      </blockquote>
+      <blockquote>
+        <p>Такого oluxs в наших архивах ещё не было. Мы даже завели под него отдельную полку.</p>
+        <footer>Музей мемов и редкостей</footer>
+      </blockquote>
+      <blockquote>
+        <p>Официально заявляем: спорить бесполезно. Решение окончательное и обжалованию не подлежит.</p>
+        <footer>Совет старейшин интернета</footer>
+      </blockquote>
+    </div>
+  </section>
+</main>
+
+<footer class="wrap foot">
+  <p>Сайт сделан в шутку и для смеха. Все организации, номера и «эксперты» выдуманы. Ничего личного, только мемы.</p>
+</footer>
+
+<script>
+(function () {
+  // ---------- meter ----------
+  var btn = document.getElementById('measure');
+  var fill = document.getElementById('fill');
+  var readout = document.getElementById('readout');
+  var msg = document.getElementById('msg');
+  var box = document.getElementById('meterBox');
+  var track = document.getElementById('track');
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var timer = null;
+
+  btn.addEventListener('click', function () {
+    btn.disabled = true;
+    fill.style.width = '0%';
+    readout.textContent = '0%';
+    msg.textContent = 'Идёт замер…';
+    void fill.offsetWidth;
+    fill.style.width = '100%';
+
+    var v = 0;
+    var steps = [
+      [30, 'Пока обычные показания. Разгоняемся.'],
+      [60, 'Так, это уже выше нормы.'],
+      [90, 'Прибор нагрелся. Стрелка не держится.'],
+      [100, 'Шкала закончилась, а oluxs продолжается.']
+    ];
+    var i = 0;
+    clearInterval(timer);
+    timer = setInterval(function () {
+      v += 2;
+      readout.textContent = v + '%';
+      track.setAttribute('aria-valuenow', Math.min(v, 100));
+      if (i < steps.length && v >= steps[i][0]) { msg.textContent = steps[i][1]; i++; }
+      if (v >= 100) {
+        clearInterval(timer);
+        readout.textContent = '999%';
+        msg.textContent = 'Результат: настоящий oluxs. Прибор сломан от восторга.';
+        if (!reduce) { box.classList.remove('shake'); void box.offsetWidth; box.classList.add('shake'); }
+        btn.disabled = false;
+        btn.textContent = 'Измерить ещё раз (результат не изменится)';
+      }
+    }, reduce ? 4 : 30);
+  });
+
+  // ---------- generator ----------
+  var name = 'Miroslav Nikiforovs';
+  var tops = [
+    'Когда думал, что видел oluxs',
+    'Все: у нас нет настоящего oluxs',
+    'Понедельник. Будильник. Реальность.',
+    'Мне нужен самый настоящий oluxs',
+    'Тест на oluxs: 1 вопрос',
+    'Кто тут главный oluxs?',
+    'Ищу лучшего в мире oluxs',
+    'Что подарить настоящему oluxs?',
+    'Проверка документов на oluxs',
+    'Новости дня: найден oluxs'
+  ];
+  var bottoms = [
+    'А потом увидел ' + name,
+    name + ' входит в чат',
+    name + ' уже там',
+    'Ответ: ' + name,
+    'Сертификат выдан: ' + name,
+    'Комитет подтверждает: ' + name,
+    'Без вариантов. ' + name,
+    'Подарок один: ещё больше мемов',
+    'Всё сходится: ' + name,
+    'Имя героя: ' + name
+  ];
+  var pics = ['🎯', '🐸', '😏', '🧐', '🤯', '🫡', '🚀', '🍿', '🎩', '🦖', '🧀', '🥇', '🪩', '🐧'];
+  var colors = ['c1','c2','c3','c4','c5','c6','c7','c8','c9','c10','c11','c12'];
+  var m = document.getElementById('genMeme');
+  var last = -1;
+
+  function pick(a) { return a[Math.floor(Math.random() * a.length)]; }
+
+  document.getElementById('genBtn').addEventListener('click', function () {
+    document.getElementById('genTop').textContent = pick(tops);
+    document.getElementById('genBottom').textContent = pick(bottoms);
+    document.getElementById('genPic').textContent = pick(pics);
+    var c;
+    do { c = Math.floor(Math.random() * colors.length); } while (c === last);
+    last = c;
+    m.className = 'meme ' + colors[c];
+  });
+})();
+</script>
 </body>
 </html>
