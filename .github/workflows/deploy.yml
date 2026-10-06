@@ -1,37 +1,19 @@
-name: Deploy website
+name: Deploy
 
 on:
   push:
-    branches:
-      - main
+    branches: [main]
   workflow_dispatch:
-
-concurrency:
-  group: production-deploy
-  cancel-in-progress: true
 
 jobs:
   deploy:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Deploy to server
-        env:
-          DEPLOY_KEY_B64: ${{ secrets.DEPLOY_KEY_B64 }}
-        run: |
-          mkdir -p ~/.ssh
-          chmod 700 ~/.ssh
-
-          printf '%s' "$DEPLOY_KEY_B64" | base64 --decode > ~/.ssh/deploy_key
-          chmod 600 ~/.ssh/deploy_key
-
-          ssh-keyscan -H 145.239.80.49 >> ~/.ssh/known_hosts
-
-          ssh -o IdentitiesOnly=yes \
-              -i ~/.ssh/deploy_key \
-              ubuntu@145.239.80.49 '
-                set -e
-                cd /var/www/kaugru
-                git fetch origin main
-                git reset --hard origin/main
-              '
+      - uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_KEY }}
+          script: |
+            cd /var/www/kvs-site
+            git pull --ff-only
