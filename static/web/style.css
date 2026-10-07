@@ -614,3 +614,21 @@ span.psw {
         width: 100%;
     }
 }
+.calendar-frame {
+  height: min(72vh, 760px);
+  border: 1px solid var(--line);
+  border-radius: var(--radius-l);
+  overflow: hidden;
+  background: #fff;
+}
+
+.calendar-frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.calendar-link {
+  margin: 20px 0 72px;
+}

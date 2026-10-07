@@ -100,21 +100,24 @@
     <div class="content">
 
         <div class="image-frame">
-            <h1>Jūrmalas Kauguru vidusskola</h1>
-            <p>Labākā skola Jūrmalā!</p>
+            <h1>Jūrmalas Kauguru vidusskola plans</h1>
+            <div class="calendar-frame">
+        <iframe id="kalendars" title="Skolas kalendārs" src="https://calendar.google.com/calendar/embed?src=lm09omf5vbimu9sq7rovsoo6m4%40group.calendar.google.com&ctz=Europe%2FRiga&hl=lv&showTitle=0&showPrint=0&amp;mode=MONTH" loading="lazy"></iframe>
+      </div>
+
+    
+    </div>
+
+    <script>
+      (function () {
+        var frame = document.getElementById("kalendars");
+        if (window.matchMedia("(max-width: 1000px)").matches) {
+          frame.src = frame.src.replace("mode=MONTH", "mode=AGENDA");
+        }
+      })();
+    </script>
         </div>
 
-        <div class="index-logo">
-            <div class="spacer"></div>
-            <img src="images/kvs-stadions1.png" alt="Kauguru vidusskolas stadions">
-        </div>
-
-        <div class="news-card-content">
-            <div class="spacer"></div>
-            <img src="images/kvs-sakumskola1.png" alt="Kauguru vidusskolas sākumskola">
-        </div>
-
-        <div class="spacer"></div>
 
     </div>
 </main>
