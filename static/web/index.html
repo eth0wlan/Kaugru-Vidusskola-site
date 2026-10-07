@@ -6,6 +6,7 @@
     <title>Jūrmalas Kauguru vidusskola</title>
     <link rel="stylesheet" href="style.css">
     <script src="script.js" data-cfasync="false" defer></script>
+    <script src="https://accounts.google.com/gsi/client" async data-cfasync="false"></script>
 </head>
 
 <body>  
@@ -20,16 +21,9 @@
         <ul>
             <li><a href="jaunumi.html">Jaunumi</a></li>
             <li><a href="info.html">Par mums</a></li>
-            <li>
-                <a href="kalendars.html"
-                   target="_blank" rel="noopener">
-                    Kalendārais plāns
-                </a>
-            </li>
+            <li><a href="kalendars.html" target="_blank" rel="noopener">Kalendārais plāns</a></li>
             <li><a href="#kontakti">Kontakti</a></li>
-            <li>
-                <button type="button" class="nav-btn" id="account-btn" onclick="openModal('id01')">  Account</button>
-            </li>
+            <li><button type="button" class="nav-btn" id="account-btn" onclick="openModal('id01')">Account</button></li>
         </ul>
     </nav>
 </header>
@@ -51,7 +45,8 @@
             <input type="password" placeholder="Enter Password" id="psw" name="psw" required>
 
             <button type="submit">Login</button>
-
+            <div id="g_id_onload" data-client_id="ТВОЙ_CLIENT_ID.apps.googleusercontent.com" data-callback="onGoogleSignIn"  data-auto_prompt="false"></div>
+<div class="g_id_signin" data-type="standard" data-text="signin_with" data-width="300"></div>
             <label>
                 <input type="checkbox" checked name="remember">
                 Remember me
