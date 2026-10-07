@@ -59,8 +59,7 @@ init_db()
 
 
 def current_user():
-    """Текущий пользователь из базы (или None). Права всегда берутся из БД,
-    поэтому если снять админку — она пропадёт сразу, без перелогина."""
+    """Текущий пользователь из базы (или None). Права всегда берутся из БД."""
     user_id = session.get("user_id")
     if user_id is None:
         return None
@@ -89,7 +88,9 @@ def index():
 @app.route("/admin")
 @admin_required
 def admin_page():
-    return send_from_directory(PRIVATE_DIR, "admin.html")
+    resp = send_from_directory(PRIVATE_DIR, "admin.html")
+    resp.headers["Cache-Control"] = "no-store"  # чтобы Cloudflare/браузер не кэшировали
+    return resp
 
 
 # ---------- API ----------
@@ -142,8 +143,8 @@ def api_login():
 def api_me():
     user = current_user()
     if user is None:
-        return jsonify(username=None, is_admin=False)
-    return jsonify(username=user["username"], is_admin=bool(user["is_admin"]))
+        return jsonify(id=None, username=None, is_admin=False)
+    return jsonify(id=user["id"], username=user["username"], is_admin=bool(user["is_admin"]))
 
 
 @app.post("/api/logout")
@@ -152,7 +153,8 @@ def api_logout():
     return jsonify(ok=True)
 
 
-# Пример API только для админов — список пользователей
+# ---------- API для админов ----------
+
 @app.get("/api/admin/users")
 @admin_required
 def api_admin_users():
@@ -160,6 +162,37 @@ def api_admin_users():
         "SELECT id, username, email, is_admin, created_at FROM users ORDER BY id"
     ).fetchall()
     return jsonify([dict(r) for r in rows])
+
+
+@app.post("/api/admin/users/<int:uid>/admin")
+@admin_required
+def api_admin_set_role(uid):
+    if uid == session.get("user_id"):
+        return jsonify(ok=False, error="You can't change your own admin access"), 400
+
+    data = request.get_json(silent=True) or {}
+    value = 1 if data.get("is_admin") else 0
+
+    db = get_db()
+    cur = db.execute("UPDATE users SET is_admin = ? WHERE id = ?", (value, uid))
+    db.commit()
+    if cur.rowcount == 0:
+        return jsonify(ok=False, error="User not found"), 404
+    return jsonify(ok=True)
+
+
+@app.delete("/api/admin/users/<int:uid>")
+@admin_required
+def api_admin_delete_user(uid):
+    if uid == session.get("user_id"):
+        return jsonify(ok=False, error="You can't delete your own account here"), 400
+
+    db = get_db()
+    cur = db.execute("DELETE FROM users WHERE id = ?", (uid,))
+    db.commit()
+    if cur.rowcount == 0:
+        return jsonify(ok=False, error="User not found"), 404
+    return jsonify(ok=True)
 
 
 if __name__ == "__main__":
