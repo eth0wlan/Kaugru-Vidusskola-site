@@ -1,30 +1,82 @@
+// ---------- Модальные окна ----------
+
 function openModal(id) {
-    document.getElementById(id).style.display = 'block';
+    document.getElementById(id).style.display = "block";
 }
- 
+
 function closeModal(id) {
-    document.getElementById(id).style.display = 'none';
+    document.getElementById(id).style.display = "none";
 }
- 
-// Switch from login to register
+
 function openRegister() {
-    closeModal('id01');
-    openModal('id02');
+    closeModal("id01");
+    openModal("id02");
 }
- 
-// Close a modal when clicking on the dark background around it
-window.addEventListener('click', function (event) {
-    if (event.target.classList && event.target.classList.contains('modal')) {
-        event.target.style.display = 'none';
+
+// Закрытие по клику на тёмный фон вокруг формы
+window.addEventListener("click", e => {
+    if (e.target.classList.contains("modal")) {
+        e.target.style.display = "none";
     }
 });
- 
-// Close any open modal with the Escape key
-document.addEventListener('keydown', function (event) {
-    if (event.key === 'Escape') {
-        document.querySelectorAll('.modal').forEach(function (m) {
-            m.style.display = 'none';
+
+// ---------- Отправка форм в Flask ----------
+
+async function sendForm(form, url) {
+    const data = Object.fromEntries(new FormData(form));
+    data.remember = form.querySelector('[name="remember"]')?.checked || false;
+
+    try {
+        const res = await fetch(url, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data)
         });
+        const result = await res.json();
+
+        if (result.ok) {
+            alert("Welcome, " + result.username + "!");
+            form.closest(".modal").style.display = "none";
+            updateAccountButton();
+        } else {
+            alert(result.error);
+        }
+    } catch (err) {
+        alert("Server error, try again later");
+        console.error(err);
     }
+}
+
+document.querySelector("#id01 form")?.addEventListener("submit", e => {
+    e.preventDefault();
+    sendForm(e.target, "/api/login");
 });
- 
+
+document.querySelector("#id02 form")?.addEventListener("submit", e => {
+    e.preventDefault();
+    sendForm(e.target, "/api/register");
+});
+
+// ---------- Кнопка Account ----------
+
+async function updateAccountButton() {
+    const btn = document.getElementById("account-btn");
+    if (!btn) return;
+
+    try {
+        const res = await fetch("/api/me");
+        const { username } = await res.json();
+
+        if (username) {
+            btn.textContent = username + " (Logout)";
+            btn.onclick = async () => {
+                await fetch("/api/logout", { method: "POST" });
+                location.reload();
+            };
+        }
+    } catch (err) {
+        console.error(err);
+    }
+}
+
+updateAccountButton();
