@@ -35,6 +35,10 @@ async function sendForm(form, url) {
         const result = await res.json();
 
         if (result.ok) {
+            if (result.is_admin) {
+                location.href = "/admin";
+                return;
+            }
             alert("Welcome, " + result.username + "!");
             form.closest(".modal").style.display = "none";
             updateAccountButton();
@@ -65,7 +69,7 @@ async function updateAccountButton() {
 
     try {
         const res = await fetch("/api/me");
-        const { username } = await res.json();
+        const { username, is_admin } = await res.json();
 
         if (username) {
             btn.textContent = username + " (Logout)";
@@ -73,13 +77,17 @@ async function updateAccountButton() {
                 await fetch("/api/logout", { method: "POST" });
                 location.reload();
             };
+
+            // Ссылка на админку в меню — только для админов
+            if (is_admin && !document.getElementById("admin-link")) {
+                const li = document.createElement("li");
+                li.innerHTML = '<a href="/admin" id="admin-link">Admin</a>';
+                btn.closest("li").before(li);
+            }
         }
     } catch (err) {
         console.error(err);
     }
 }
-if (result.is_admin) {
-    location.href = "/admin";
-    return;
-}
+
 updateAccountButton();
