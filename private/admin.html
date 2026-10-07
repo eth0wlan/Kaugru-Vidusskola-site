@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="lv">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="robots" content="noindex, nofollow">
+    <title>Admin — Jūrmalas Kauguru vidusskola</title>
+    <link rel="stylesheet" href="/static/web/style.css">
+    <style>
+        .admin {
+            --ink: #1f2933;
+            --muted: #5f6b7a;
+            --line: #dfe3e8;
+            --wash: #f4f6f8;
+            --accent: #1d4e89;
+            --danger: #b42318;
+            --ok: #1a7f4b;
+
+            max-width: 1040px;
+            margin: 0 auto;
+            padding: 40px 20px 64px;
+            color: var(--ink);
+        }
+
+        .admin-head {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 16px;
+            margin-bottom: 20px;
+        }
+
+        .admin h1 {
+            margin: 0;
+            font-size: 1.9rem;
+            line-height: 1.2;
+        }
+
+        .admin-sub {
+            margin: 6px 0 0;
+            color: var(--muted);
+        }
+
+        .admin .search {
+            width: 280px;
+            max-width: 100%;
+            margin: 0;
+            padding: 10px 12px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            font: inherit;
+            box-sizing: border-box;
+        }
+
+        .admin-msg {
+            margin: 0 0 16px;
+            padding: 10px 14px;
+            border-left: 3px solid var(--ok);
+            background: var(--wash);
+        }
+        .admin-msg.is-error { border-left-color: var(--danger); }
+
+        .table-wrap {
+            overflow-x: auto;
+            border: 1px solid var(--line);
+            border-radius: 8px;
+        }
+
+        .admin table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.95rem;
+        }
+
+        .admin th,
+        .admin td {
+            padding: 12px 14px;
+            text-align: left;
+            border-bottom: 1px solid var(--line);
+            white-space: nowrap;
+        }
+
+        .admin th {
+            background: var(--wash);
+            font-weight: 600;
+            color: var(--muted);
+        }
+
+        .admin tbody tr:last-child td { border-bottom: 0; }
+        .admin td.num { color: var(--muted); font-variant-numeric: tabular-nums; }
+
+        .you {
+            margin-left: 6px;
+            color: var(--muted);
+            font-size: 0.85em;
+        }
+
+        .role {
+            display: inline-block;
+            padding: 2px 10px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+        }
+        .role-admin { background: var(--accent); color: #fff; }
+        .role-user  { background: var(--wash); color: var(--muted); border: 1px solid var(--line); }
+
+        .admin td.actions { text-align: right; }
+
+        /* сбрасываем глобальные стили кнопок из style.css */
+        .admin .btn {
+            width: auto;
+            margin: 0 0 0 8px;
+            padding: 6px 12px;
+            border: 1px solid var(--line);
+            border-radius: 6px;
+            background: #fff;
+            color: var(--ink);
+            font: inherit;
+            font-size: 0.9rem;
+            cursor: pointer;
+            opacity: 1;
+        }
+        .admin .btn:hover { background: var(--wash); }
+        .admin .btn-danger { color: var(--danger); }
+        .admin .btn-danger:hover { background: #fdecea; border-color: #f3b8b2; }
+
+        .admin .btn:focus-visible,
+        .admin .search:focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
+        .admin-empty {
+            margin: 16px 0 0;
+            color: var(--muted);
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <a href="/" class="logo">
+        <img src="/static/web/images/logo.png" alt="Jūrmalas Kauguru vidusskolas logo">
+        <span>Jūrmalas Kauguru vidusskola</span>
+    </a>
+
+    <nav>
+        <ul>
+            <li><a href="/">Back to site</a></li>
+            <li><button type="button" class="nav-btn" id="logout-btn">Log out</button></li>
+        </ul>
+    </nav>
+</header>
+
+<main class="admin">
+
+    <div class="admin-head">
+        <div>
+            <h1>Users</h1>
+            <p class="admin-sub" id="summary">Loading users…</p>
+        </div>
+        <input type="search" class="search" id="search"
+               placeholder="Search by name or email" aria-label="Search users">
+    </div>
+
+    <p class="admin-msg" id="msg" role="status" hidden></p>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>Registered</th>
+                    <th>Role</th>
+                    <th><span hidden>Actions</span></th>
+                </tr>
+            </thead>
+            <tbody id="rows"></tbody>
+        </table>
+    </div>
+
+    <p class="admin-empty" id="empty" hidden>No users match this search.</p>
+
+</main>
+
+<script data-cfasync="false">
+const rowsEl    = document.getElementById("rows");
+const searchEl  = document.getElementById("search");
+const msgEl     = document.getElementById("msg");
+const summaryEl = document.getElementById("summary");
+const emptyEl   = document.getElementById("empty");
+
+let users = [];
+let meId = null;
+let msgTimer;
+
+function showMsg(text, isError = false) {
+    msgEl.textContent = text;
+    msgEl.classList.toggle("is-error", isError);
+    msgEl.hidden = false;
+    clearTimeout(msgTimer);
+    msgTimer = setTimeout(() => { msgEl.hidden = true; }, 4000);
+}
+
+async function api(url, options = {}) {
+    const res = await fetch(url, {
+        headers: { "Content-Type": "application/json" },
+        ...options
+    });
+    if (res.status === 403) {          // права сняли или сессия кончилась
+        location.href = "/";
+        throw new Error("Access denied");
+    }
+    const data = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(data.error || `Request failed (${res.status})`);
+    return data;
+}
+
+function formatDate(value) {
+    if (!value) return "";
+    const d = new Date(value.replace(" ", "T") + "Z");   // SQLite хранит время в UTC
+    return isNaN(d) ? value : d.toLocaleDateString("lv-LV");
+}
+
+// textContent, а не innerHTML — имена вводят пользователи, это защита от XSS
+function cell(text, className) {
+    const td = document.createElement("td");
+    td.textContent = text;
+    if (className) td.className = className;
+    return td;
+}
+
+function button(label, className, onClick) {
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = className;
+    b.textContent = label;
+    b.addEventListener("click", onClick);
+    return b;
+}
+
+function render() {
+    const q = searchEl.value.trim().toLowerCase();
+    const list = users.filter(u =>
+        !q || u.username.toLowerCase().includes(q) || u.email.toLowerCase().includes(q)
+    );
+
+    rowsEl.replaceChildren();
+
+    for (const u of list) {
+        const tr = document.createElement("tr");
+
+        const nameTd = cell(u.username);
+        if (u.id === meId) {
+            const you = document.createElement("span");
+            you.className = "you";
+            you.textContent = "(you)";
+            nameTd.append(you);
+        }
+
+        const roleTd = document.createElement("td");
+        const badge = document.createElement("span");
+        badge.className = "role " + (u.is_admin ? "role-admin" : "role-user");
+        badge.textContent = u.is_admin ? "Admin" : "User";
+        roleTd.append(badge);
+
+        const actTd = document.createElement("td");
+        actTd.className = "actions";
+        if (u.id !== meId) {
+            actTd.append(
+                button(u.is_admin ? "Remove admin" : "Make admin", "btn", () => setAdmin(u, !u.is_admin)),
+                button("Delete", "btn btn-danger", () => removeUser(u))
+            );
+        }
+
+        tr.append(cell(u.id, "num"), nameTd, cell(u.email), cell(formatDate(u.created_at)), roleTd, actTd);
+        rowsEl.append(tr);
+    }
+
+    emptyEl.hidden = list.length > 0;
+    const admins = users.filter(u => u.is_admin).length;
+    summaryEl.textContent = `${users.length} registered, ${admins} with admin access`;
+}
+
+async function load() {
+    try {
+        const [me, list] = await Promise.all([api("/api/me"), api("/api/admin/users")]);
+        meId = me.id;
+        users = list;
+        render();
+    } catch (err) {
+        summaryEl.textContent = "Couldn't load users: " + err.message;
+    }
+}
+
+async function setAdmin(u, makeAdmin) {
+    try {
+        await api(`/api/admin/users/${u.id}/admin`, {
+            method: "POST",
+            body: JSON.stringify({ is_admin: makeAdmin })
+        });
+        u.is_admin = makeAdmin ? 1 : 0;
+        render();
+        showMsg(makeAdmin ? `${u.username} is now an admin.` : `${u.username} is no longer an admin.`);
+    } catch (err) {
+        showMsg(err.message, true);
+    }
+}
+
+async function removeUser(u) {
+    if (!confirm(`Delete ${u.username}? This can't be undone.`)) return;
+    try {
+        await api(`/api/admin/users/${u.id}`, { method: "DELETE" });
+        users = users.filter(x => x.id !== u.id);
+        render();
+        showMsg(`${u.username} deleted.`);
+    } catch (err) {
+        showMsg(err.message, true);
+    }
+}
+
+searchEl.addEventListener("input", render);
+
+document.getElementById("logout-btn").addEventListener("click", async () => {
+    await fetch("/api/logout", { method: "POST" });
+    location.href = "/";
+});
+
+load();
+</script>
+
+</body>
+</html>

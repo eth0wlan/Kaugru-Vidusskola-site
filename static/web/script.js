@@ -78,5 +78,8 @@ async function updateAccountButton() {
         console.error(err);
     }
 }
-
+if (result.is_admin) {
+    location.href = "/admin";
+    return;
+}
 updateAccountButton();
